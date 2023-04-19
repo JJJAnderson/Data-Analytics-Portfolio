@@ -376,5 +376,5 @@ ORDER BY f.Date, s.Store;
 
 -- Exporting the data to Excel for modeling, and also to Tableau
 
-
+-- Visualization found here: https://public.tableau.com/app/profile/josh4160/viz/CaseStudy-SalesForecast/Dashboard1
 
