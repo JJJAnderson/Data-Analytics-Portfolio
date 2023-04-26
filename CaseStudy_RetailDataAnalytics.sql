@@ -48,7 +48,7 @@ SET
 	Type = LTRIM(RTRIM(Type)),
 	Size = LTRIM(RTRIM(Size));
 
--- Cleaning the Features table
+-- Checking for NULL Values
 
 SELECT *
 FROM Sales
@@ -75,7 +75,8 @@ WHERE Store IS NULL
 OR Type IS NULL 
 OR Size IS NULL;
 
--- No NULL values but there are several 'NA' in the Markdown columns.
+-- No NULL values but there are several 'NA' in the Markdown columns on the Features Table
+-- Cleaning the Features table
 
 UPDATE Features
 SET MarkDown1 = 0
@@ -231,7 +232,7 @@ BEGIN
 
     SELECT @output =
         CASE
-            -- Check if input matches the format of previous conversion attempts
+            -- Checking if input matches the format of previous conversion attempts
             WHEN @input LIKE '__-__-____' THEN NULL
             -- Try converting using format 103 (dd/mm/yyyy)
             WHEN TRY_CONVERT(DATE, @input, 103) IS NOT NULL THEN TRY_CONVERT(DATE, @input, 103)
@@ -260,14 +261,11 @@ UPDATE Sales
 SET Date = CONVERT(datetime, CONVERT(varchar(10), Date, 120), 120)
 WHERE ISDATE(Date) = 1;
 
--- Now converting it all to ISO 8601 format, and then hopefully it will allow me to Alter the datatype for the whole column.
+-- Now converting it all to ISO 8601 format
 
 UPDATE Sales
 SET Date = CONVERT(varchar(30), CONVERT(datetime, Date), 126)
 WHERE ISDATE(Date) = 1;
-
-ALTER TABLE Sales 
-ALTER COLUMN Date date;
 
 -- IT WORKS! Now to convert the date in the Features table 
 
@@ -294,11 +292,6 @@ WHERE ISDATE(Date) = 0
 UPDATE Features
 SET Date = CONVERT(date, Date, 103)
 WHERE ISDATE(Date) = 1
-
--- Conversion successful, now proceeding again with converting the entire column to date. 
-
-ALTER TABLE Features 
-ALTER COLUMN Date date;
 
 SELECT *
 FROM Features
