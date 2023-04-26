@@ -309,7 +309,7 @@ FROM Sales
 GROUP BY Date
 ORDER BY Date;
 
--- Exporting the data to Excel for forecasting
+-- Exporting the data to Excel for forecasting in file Task 1 SQL Export.xlsx
 
 -- TASK 2 Model the effects of markdowns on holiday weeks
 
@@ -367,7 +367,7 @@ LEFT JOIN (SELECT Store, Date, SUM(Weekly_Sales) AS Total_Sales
 WHERE ts.Total_Sales IS NOT NULL
 ORDER BY f.Date, s.Store;
 
--- Exporting the data to Excel for modeling, and also to Tableau
+-- Exporting the data to Excel for modeling to file sales_and_markdowns_holiday_weeks.xlsx, and then to Tableau
 
 -- Visualization found here: https://public.tableau.com/app/profile/josh4160/viz/CaseStudy-SalesForecast/Dashboard1
 
